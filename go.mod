@@ -1,4 +1,4 @@
-module ssh2x11
+module github.com/lizazacn/ssh2x11
 
 go 1.19
 
