@@ -1,0 +1,8 @@
+package ssh2x11
+
+const (
+	AUTH_MIT_MAGIC_COOKIE_1  = "MIT-MAGIC-COOKIE-1"
+	AUTH_XDM_AUTHORIZATION_1 = "XDM-AUTHORIZATION-1"
+	AUTH_SUN_DES_1           = "SUN-DES-1"
+	AUTH_SUN_DES_3           = "SUN-DES-3"
+)
