@@ -36,8 +36,8 @@ func CreateX11Session(client *ssh.Client, x11Request *X11Request, conn net.Conn)
 		errChan <- err
 		return nil, errChan
 	}
-	request, err := session.SendRequest("x11-req", false, ssh.Marshal(x11Request))
-	if err != nil || !request {
+	_, err = session.SendRequest("x11-req", false, ssh.Marshal(x11Request))
+	if err != nil {
 		errChan <- err
 		return nil, errChan
 	}
