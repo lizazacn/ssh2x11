@@ -36,6 +36,25 @@ func CreateX11Session(client *ssh.Client, x11Request *X11Request, conn net.Conn)
 		errChan <- err
 		return nil, errChan
 	}
+	if conn == nil {
+		if runtime.GOOS == "windows" {
+			conn, err = net.Dial("tcp", "127.0.0.1:6000")
+			if err != nil {
+				errChan <- err
+				return nil, errChan
+			}
+		} else {
+			conn, err = net.Dial("unix", "/tmp/.X11-unix/X0")
+			if err != nil {
+				log.Printf("建立unix连接异常，尝试建立TCP连接！\n")
+				conn, err = net.Dial("tcp", "127.0.0.1:6000")
+				if err != nil {
+					errChan <- err
+					return nil, errChan
+				}
+			}
+		}
+	}
 	_, err = session.SendRequest("x11-req", false, ssh.Marshal(x11Request))
 	if err != nil {
 		errChan <- err
@@ -75,24 +94,7 @@ func forwardToLocal(channel ssh.Channel, conn net.Conn) error {
 	if channel == nil {
 		return errors.New("sshChannel is not exits")
 	}
-	if conn == nil {
-		var err error
-		if runtime.GOOS == "windows" {
-			conn, err = net.Dial("tcp", "127.0.0.1:6000")
-			if err != nil {
-				return err
-			}
-		} else {
-			conn, err = net.Dial("unix", "/tmp/.X11-unix/X0")
-			if err != nil {
-				log.Printf("建立unix连接异常，尝试建立TCP连接！\n")
-				conn, err = net.Dial("tcp", "127.0.0.1:6000")
-				if err != nil {
-					return err
-				}
-			}
-		}
-	}
+
 	var errChan = make(chan error, 4)
 	var wait sync.WaitGroup
 	wait.Add(2)
