@@ -8,9 +8,9 @@ import (
 
 func TestSSH(t *testing.T) {
 	config := &ssh.ClientConfig{
-		User: "root",
+		User: "wangnana",
 		Auth: []ssh.AuthMethod{
-			ssh.Password("123456"),
+			ssh.Password("wangnana?"),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}

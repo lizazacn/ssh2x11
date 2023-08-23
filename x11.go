@@ -155,6 +155,16 @@ func WsConnForward(conn *websocket.Conn, channel ssh.Channel, errChan chan error
 		for true {
 			l, err2 := channel.Read(buf)
 			if err2 != nil {
+				err := conn.WriteMessage(websocket.BinaryMessage, buf[:l])
+				if err != nil {
+					log.Printf("websocket发送消息异常：%v", err)
+					return
+				}
+				err = conn.WriteMessage(websocket.BinaryMessage, []byte("EXITEOF"))
+				if err != nil {
+					log.Printf("websocket发送消息异常：%v", err)
+					return
+				}
 				return
 			}
 			err := conn.WriteMessage(websocket.BinaryMessage, buf[:l])
