@@ -170,13 +170,15 @@ func WsConnForward(conn *websocket.Conn, channel ssh.Channel, errChan chan error
 			errChan <- channel.CloseWrite()
 		}(channel)
 		defer wait.Done()
-		_, msg, err2 := conn.ReadMessage()
-		if err2 != nil {
-			return
-		}
-		_, err := channel.Write(msg)
-		if err != nil {
-			return
+		for true {
+			_, msg, err2 := conn.ReadMessage()
+			if err2 != nil {
+				return
+			}
+			_, err := channel.Write(msg)
+			if err != nil {
+				return
+			}
 		}
 	}()
 	wait.Wait()
