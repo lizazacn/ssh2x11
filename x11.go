@@ -146,25 +146,22 @@ func NetConnForward(conn net.Conn, channel ssh.Channel, errChan chan error) {
 
 // WsConnForward 转发到WSConn
 func WsConnForward(conn *websocket.Conn, channel ssh.Channel, errChan chan error) {
-	_, reader, err := conn.NextReader()
-	if err != nil {
-		return
-	}
-	writer, err := conn.NextWriter(websocket.BinaryMessage)
-	if err != nil {
-		return
-	}
+
 	var wait sync.WaitGroup
 	wait.Add(2)
 	go func() {
-		defer func(conn *websocket.Conn) {
-			errChan <- conn.Close()
-		}(conn)
 		defer wait.Done()
-		_, err = io.Copy(writer, channel)
-		if err != nil {
-			errChan <- err
-			return
+		var buf = make([]byte, 1024*32)
+		for true {
+			l, err2 := channel.Read(buf)
+			if err2 != nil {
+				return
+			}
+			err := conn.WriteMessage(websocket.BinaryMessage, buf[:l])
+			if err != nil {
+				log.Printf("websocket发送消息异常：%v", err)
+				return
+			}
 		}
 	}()
 
@@ -173,9 +170,12 @@ func WsConnForward(conn *websocket.Conn, channel ssh.Channel, errChan chan error
 			errChan <- channel.CloseWrite()
 		}(channel)
 		defer wait.Done()
-		_, err = io.Copy(channel, reader)
+		_, msg, err2 := conn.ReadMessage()
+		if err2 != nil {
+			return
+		}
+		_, err := channel.Write(msg)
 		if err != nil {
-			errChan <- err
 			return
 		}
 	}()
