@@ -10,6 +10,7 @@ import (
 	"math/rand"
 	"net"
 	"os"
+	"reflect"
 	"runtime"
 	"sync"
 )
@@ -33,6 +34,11 @@ func NewX11Session(client *ssh.Client, conn interface{}) (*ssh.Session, chan err
 
 func CreateX11Session(client *ssh.Client, x11Request *X11Request, conn interface{}) (*ssh.Session, chan error) {
 	var errChan = make(chan error, 10)
+	v := reflect.ValueOf(conn)
+	if conn != nil && v.Kind() != reflect.Ptr {
+		errChan <- errors.New("conn参数必须为指针类型！")
+		return nil, errChan
+	}
 	session, err := client.NewSession()
 	if err != nil {
 		errChan <- err
@@ -97,8 +103,8 @@ func forwardToLocal(channel ssh.Channel, conn interface{}) error {
 	}
 	var errChan = make(chan error, 4)
 	switch conn.(type) {
-	case net.Conn:
-		NetConnForward(conn.(net.Conn), channel, errChan)
+	case *net.Conn:
+		NetConnForward(*(conn.(*net.Conn)), channel, errChan)
 	case *websocket.Conn:
 		WsConnForward(conn.(*websocket.Conn), channel, errChan)
 	case *os.File:
