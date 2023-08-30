@@ -1,5 +1,7 @@
 github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/lizazacn/websocket v1.0.0 h1:52QL2i3rkVAM8Kjb32MCNHDlUjNVchWx44cZaJU+PKM=
+github.com/lizazacn/websocket v1.0.0/go.mod h1:bd6Q4yi7UZHQXp/3EHdAWKw1gd6TAHdWEmfDuPraHgY=
 github.com/lizazacn/websocket v1.0.1 h1:hR9wpUiXfzxPFXSkt4q+pO69Neestx1hNYwBvoeX+Cg=
 github.com/lizazacn/websocket v1.0.1/go.mod h1:bd6Q4yi7UZHQXp/3EHdAWKw1gd6TAHdWEmfDuPraHgY=
 github.com/lizazacn/websocket v1.0.2 h1:M/+7+mlABVi3RdT/Useo+5b2vRBW4cab2PtGQthrXNY=
