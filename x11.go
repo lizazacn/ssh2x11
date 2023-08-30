@@ -156,10 +156,10 @@ func WsConnForward(conn *websocket.Conn, channel ssh.Channel, errChan chan error
 	var wait sync.WaitGroup
 	wait.Add(2)
 	go func() {
+		defer wait.Done()
 		defer func() {
 			errChan <- conn.Close()
 		}()
-		defer wait.Done()
 		var buf = make([]byte, 1024*32)
 		for true {
 			l, err2 := channel.Read(buf)
@@ -185,10 +185,10 @@ func WsConnForward(conn *websocket.Conn, channel ssh.Channel, errChan chan error
 	}()
 
 	go func() {
+		defer wait.Done()
 		defer func(channel ssh.Channel) {
 			errChan <- channel.CloseWrite()
 		}(channel)
-		defer wait.Done()
 		for true {
 			_, msg, err2 := conn.ReadMessage()
 			if err2 != nil {
