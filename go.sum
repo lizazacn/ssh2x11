@@ -4,6 +4,8 @@ github.com/lizazacn/websocket v1.0.1 h1:hR9wpUiXfzxPFXSkt4q+pO69Neestx1hNYwBvoeX
 github.com/lizazacn/websocket v1.0.1/go.mod h1:bd6Q4yi7UZHQXp/3EHdAWKw1gd6TAHdWEmfDuPraHgY=
 github.com/lizazacn/websocket v1.0.2 h1:M/+7+mlABVi3RdT/Useo+5b2vRBW4cab2PtGQthrXNY=
 github.com/lizazacn/websocket v1.0.2/go.mod h1:bd6Q4yi7UZHQXp/3EHdAWKw1gd6TAHdWEmfDuPraHgY=
+github.com/lizazacn/websocket v1.0.3 h1:sz3yPn7dHAS54g2XNOtD4LjkoQejRx6xQjvu38hNiJM=
+github.com/lizazacn/websocket v1.0.3/go.mod h1:bd6Q4yi7UZHQXp/3EHdAWKw1gd6TAHdWEmfDuPraHgY=
 golang.org/x/crypto v0.12.0 h1:tFM/ta59kqch6LlvYnPa0yx5a83cL2nHflFhYKvv9Yk=
 golang.org/x/crypto v0.12.0/go.mod h1:NF0Gs7EO5K4qLn+Ylc+fih8BSTeIjAP05siRnAh98yw=
 golang.org/x/net v0.14.0 h1:BONx9s002vGdD9umnlX1Po8vOZmrgH34qlHcD1MfK14=
