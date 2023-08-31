@@ -3,7 +3,7 @@ package ssh2x11
 import (
 	"encoding/hex"
 	"errors"
-	"github.com/gorilla/websocket"
+	"github.com/lizazacn/websocket"
 	"golang.org/x/crypto/ssh"
 	"io"
 	"log"
